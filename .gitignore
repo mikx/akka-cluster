@@ -1,0 +1,10 @@
+.settings/
+bin/
+project/*/
+project/secret.conf
+target/
+/.cache-main
+/.cache-tests
+/.classpath
+/.project
+
