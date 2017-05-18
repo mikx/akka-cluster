@@ -2,11 +2,15 @@
 val akkaVersion     = "2.5.1"
 val akkaHttpVersion = "10.0.6"
 
+enablePlugins(JavaAppPackaging)
+cleanKeepFiles += baseDirectory { base => base / "target/universal" } .value
 
 lazy val root = (project in file(".")).settings(
 
   name            := "WeaveCluster",
   organization    := "io.weave",
+  version         := "1.0",
+  
   scalaVersion    := "2.12.2",
 
   resolvers ++= Seq(
