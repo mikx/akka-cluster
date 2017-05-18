@@ -5,4 +5,4 @@ EXPOSE 8080 2552
 ADD target/universal/weavecluster-1.0.zip /tmp/weavecluster-1.0.zip
 RUN unzip /tmp/weavecluster-1.0.zip -d /tmp
 
-ENTRYPOINT /tmp/weavecluster-1.0/bin/weavecluster
+ENTRYPOINT ["/tmp/weavecluster-1.0/bin/weavecluster","-DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`"]
