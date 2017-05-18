@@ -1,18 +1,19 @@
 package io.weave.cluster
 
 
-import akka.actor.ActorSystem
 import scala.concurrent.Await
-import akka.event.Logging
 import scala.concurrent.duration.Duration
+
+import akka.actor.ActorSystem
+import akka.event.Logging
+import akka.actor.Props
 
 object ApplicationMain extends App {
   
-  val system = ActorSystem("MyActorSystem")
-  val pingActor = system.actorOf(PingActor.props, "pingActor")
-  pingActor ! PingActor.Initialize
+  val system = ActorSystem("weave-seed")
+  val simpleClusterListener = system.actorOf(Props(classOf[SimpleClusterListener]), "SimpleClusterListener")
   
-  Logging(system, getClass).info("Weave server up and running")
+  Logging(system, getClass).info("Seed server is up and running")
   Await.result(system.whenTerminated, Duration.Inf)
 
 }
