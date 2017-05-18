@@ -10,7 +10,7 @@ import akka.actor.Props
 
 object ApplicationMain extends App {
   
-  val system = ActorSystem("weave-seed")
+  val system = ActorSystem("ClusterSystem")
   val simpleClusterListener = system.actorOf(Props(classOf[SimpleClusterListener]), "SimpleClusterListener")
   
   Logging(system, getClass).info("Seed server is up and running")
