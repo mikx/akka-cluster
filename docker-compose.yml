@@ -3,3 +3,4 @@ app-build:
     image: build-sbt
     context: .
     dockerfile: Dockerfile.build
+  cached: true
