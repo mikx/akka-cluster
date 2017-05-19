@@ -1,9 +1,0 @@
-#
-# sbt run file
-#
-
-# Pull base image
-FROM  build-sbt
-
-# Add working dir
-ADD . /tmp/build

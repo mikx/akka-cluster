@@ -1,3 +1,4 @@
 - name: build
-  service: app-build-run
+  service: app-build
   command: sbt compile
+ 
