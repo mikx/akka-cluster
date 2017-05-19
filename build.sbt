@@ -3,7 +3,11 @@ val akkaVersion     = "2.5.1"
 val akkaHttpVersion = "10.0.6"
 
 enablePlugins(JavaAppPackaging)
+enablePlugins(DockerPlugin)
+
 cleanKeepFiles += baseDirectory { base => base / "target/universal" } .value
+
+dockerExposedPorts := Seq(2552,8080)
 
 lazy val root = (project in file(".")).settings(
 
