@@ -4,3 +4,10 @@ app-build:
     context: .
     dockerfile: Dockerfile.build
   cached: true
+app-build-run:
+  build:
+    image: build-sbt-run
+    context: .
+    dockerfile: Dockerfile.build-run
+  cached: false
+  

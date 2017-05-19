@@ -31,5 +31,4 @@ RUN \
 
 # Define working directory
 RUN mkdir /tmp/build
-ADD . /tmp/build
 WORKDIR /tmp/build
