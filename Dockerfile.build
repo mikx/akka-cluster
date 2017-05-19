@@ -30,4 +30,6 @@ RUN \
   sbt sbtVersion
 
 # Define working directory
-WORKDIR /root
+RUN mkdir /tmp/build
+ADD . /tmp/build
+WORKDIR /tmp/build
