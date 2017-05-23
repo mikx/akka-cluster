@@ -1,6 +1,3 @@
-- name: build
-  service: app-builder
-  command: sbt compile
 - name: push-image
   type: push
   service: app-builder

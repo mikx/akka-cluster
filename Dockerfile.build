@@ -5,7 +5,7 @@
 #
 
 # Pull base image
-FROM  openjdk:8
+FROM  openjdk:8 as build-stage
 
 ENV SCALA_VERSION 2.12.2
 ENV SBT_VERSION 0.13.15
@@ -35,3 +35,18 @@ WORKDIR /tmp/build
 
 # Add working dir
 ADD . /tmp/build
+
+# Run build
+RUN sbt test docker:stage
+
+# Pull base image again
+FROM  openjdk:8
+
+# Copy from previous stage
+RUN mkdir /tmp/run
+COPY --from=build-stage /tmp/build/target/tocker/stage/opt/docker/ /tmp/run/
+
+# Application entry
+ENTRYPOINT /tmp/run/bin/weavecluster -DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`
+
+

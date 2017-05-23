@@ -7,7 +7,7 @@ enablePlugins(DockerPlugin)
 
 cleanKeepFiles += baseDirectory { base => base / "target/universal" } .value
 
-dockerExposedPorts := Seq(2552,8080)
+dockerExposedPorts := Seq(2552)
 
 lazy val root = (project in file(".")).settings(
 

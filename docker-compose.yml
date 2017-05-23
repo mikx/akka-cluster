@@ -8,3 +8,8 @@ aws_generator:
   image: codeship/aws-ecr-dockercfg-generator
   encrypted_env_file: env-ecs.encrypted
   add_docker: true
+awsdeployment:
+  image: codeship/aws-deployment
+  encrypted_env_file: env-ecs.encrypted
+  environment:
+    - AWS_DEFAULT_REGION=us-east-1
