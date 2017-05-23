@@ -1,7 +1,10 @@
 app-build:
   build:
-    image: build-sbt
+    image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/default/app
     context: .
     dockerfile: Dockerfile.build
   cached: true
-  
+aws_generator: 
+  image: codeship/aws-ecr-dockercfg-generator
+  encrypted_env_file: env-ecs.encrypted
+  add_docker: true
