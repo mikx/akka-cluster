@@ -1,7 +1,7 @@
 - name: build
   service: app-build
   command: sbt compile
- - type: push
+- type: push
   service: app-build
   registry: https://478489794941.dkr.ecr.us-east-1.amazonaws.com
   image_name: 478489794941.dkr.ecr.us-east-1.amazonaws.com/default/app
