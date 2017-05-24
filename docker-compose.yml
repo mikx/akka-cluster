@@ -1,6 +1,6 @@
 app-builder:
   build:
-    image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/default
+    image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/default:${CI_BUILD_ID}
     context: .
     dockerfile: Dockerfile.build
   cached: true
