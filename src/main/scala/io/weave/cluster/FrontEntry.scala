@@ -23,7 +23,7 @@ class FrontEntry extends Actor with ActorLogging {
   implicit val mat = ActorMaterializer()
   
   import akka.http.scaladsl.server.Directives._
-  val handler: Flow[HttpRequest, HttpResponse, Any] = Route.handlerFlow( get { complete("Hello, stranger!") } )
+  val handler: Flow[HttpRequest, HttpResponse, Any] = Route.handlerFlow( get { complete("Hello again, stranger!") } )
 
   import context.dispatcher
   Http(context.system).bindAndHandle(handler, interface, port).pipeTo(self)
