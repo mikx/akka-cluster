@@ -47,6 +47,6 @@ RUN mkdir /tmp/run
 COPY --from=build-stage /tmp/build/target/docker/stage/opt/docker/ /tmp/run/
 
 # Application entry
-ENTRYPOINT ["/tmp/run/bin/weavecluster", "-DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`"]
+ENTRYPOINT /tmp/run/bin/weavecluster -DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`
 
 
