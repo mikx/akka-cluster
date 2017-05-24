@@ -15,7 +15,7 @@ object ApplicationMain extends App {
 
   val config = ConfigFactory.load()
   val role = config.getStringList("akka.cluster.roles").get(0)
-  val port = if (role == "SEED") "2552" else "0"  
+  val port = if (role == "SEED") "2552" else "2251"  
   
   val overrideConfig = ConfigFactory.empty()
     .withValue("akka.remote.netty.tcp.port", ConfigValueFactory.fromAnyRef(port))
