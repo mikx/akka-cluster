@@ -1,12 +1,12 @@
 - name: push-image-front-latest
   type: push
-  service: app-builder-front
+  service: app-builder-2-front
   registry: https://478489794941.dkr.ecr.us-east-1.amazonaws.com
   image_name: 478489794941.dkr.ecr.us-east-1.amazonaws.com/front
   dockercfg_service: aws_generator
 - name: push-image-front-tagged
   type: push
-  service: app-builder-front
+  service: app-builder-2-front
   registry: https://478489794941.dkr.ecr.us-east-1.amazonaws.com
   image_name: 478489794941.dkr.ecr.us-east-1.amazonaws.com/front
   image_tag: "{{.CommitID}}"
