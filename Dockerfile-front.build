@@ -32,24 +32,28 @@ RUN \
 # Pull sbt image
 FROM sbt-stage as build-stage
 
-# Define working directory
+# Create folders 
+RUN mkdir /tmp/run
 RUN mkdir /tmp/build
+
+# Define working directory
 WORKDIR /tmp/build
 
 # Add working dir
 ADD . /tmp/build
 
 # Run build
-RUN sbt test front/docker:stage
+RUN sbt test front/docker:stage back/docker:stage
 
-# Pull base image again
-FROM openjdk:8
-
-# Copy from the previous stage
-RUN mkdir /tmp/run
+# Pull base image again, make front image
+FROM openjdk:8 as 478489794941.dkr.ecr.us-east-1.amazonaws.com/front
 COPY --from=build-stage /tmp/build/front/target/docker/stage/opt/docker/ /tmp/run/
-
-# Application entry
 ENTRYPOINT /tmp/run/bin/weavecluster -DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`
 
+# Pull base image again, make back image
+FROM openjdk:8 as 478489794941.dkr.ecr.us-east-1.amazonaws.com/back
+COPY --from=build-stage /tmp/build/back/target/docker/stage/opt/docker/ /tmp/run/
+ENTRYPOINT /tmp/run/bin/weavecluster -DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`
 
+# Pull base image again (not sure if we need that)
+FROM openjdk:8

@@ -1,6 +1,6 @@
 app-builder-front:
   build:
-    image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/front
+    image: ignore/ignore
     context: .
     dockerfile: Dockerfile-front.build
   cached: true
