@@ -1,0 +1,30 @@
+#
+# Scala and sbt Dockerfile
+#
+# https://github.com/hseeberger/scala-sbt
+#
+
+# Pull stage image
+FROM tool-stage as build-stage
+
+# Define working directory
+RUN mkdir /tmp/build
+WORKDIR /tmp/build
+
+# Add working dir
+ADD . /tmp/build
+
+# Run build
+RUN sbt test front/docker:stage
+
+# Pull base image again
+FROM  openjdk:8
+
+# Copy from the previous stage
+RUN mkdir /tmp/run
+COPY --from=build-stage /tmp/build/front/target/docker/stage/opt/docker/ /tmp/run/
+
+# Application entry
+ENTRYPOINT /tmp/run/bin/weavecluster -DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`
+
+

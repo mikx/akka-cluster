@@ -1,8 +1,14 @@
-app-builder:
+app-builder-stage:
   build:
-    image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/default
+    image: weave/stage
     context: .
     dockerfile: Dockerfile.build
+  cached: true
+app-builder-front:
+  build:
+    image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/front
+    context: .
+    dockerfile: Dockerfile-front.build
   cached: true
 aws_generator: 
   image: codeship/aws-ecr-dockercfg-generator

@@ -3,10 +3,8 @@ package io.weave.cluster
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
-
 import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigValueFactory
-
 import akka.actor.Actor
 import akka.actor.ActorSystem
 import akka.actor.Props

@@ -31,13 +31,20 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file(".")).settings(
   commonSettings,
   EclipseKeys.skipProject := true
-).dependsOn(front, back).aggregate(core, front, back).enablePlugins(JavaAppPackaging,DockerPlugin)
+).aggregate(core, front, back, seed)
 
 
 lazy val core = (project in file("core")).settings(
   commonSettings,
   name := "Core"
 )
+
+
+lazy val back = (project in file("back")).settings(
+  commonSettings,
+  name := "Back"
+).dependsOn(core).enablePlugins(JavaAppPackaging,DockerPlugin)
+
 
 lazy val front = (project in file("front")).settings(
   commonSettings,
@@ -47,11 +54,11 @@ lazy val front = (project in file("front")).settings(
     "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion  % Test,
     "org.scalatest"     %% "scalatest"         % "3.0.1"          % Test
   )  
-).dependsOn(core)
+).dependsOn(core).enablePlugins(JavaAppPackaging,DockerPlugin)
 
 
-lazy val back = (project in file("back")).settings(
+lazy val seed = (project in file("seed")).settings(
   commonSettings,
-  name := "Back"
-).dependsOn(core)
+  name := "Seed"
+).dependsOn(core).enablePlugins(JavaAppPackaging,DockerPlugin)
 
