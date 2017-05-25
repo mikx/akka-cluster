@@ -5,7 +5,7 @@
 #
 
 # Pull stage image
-FROM tool-stage as build-stage
+FROM weave/stage as build-stage
 
 # Define working directory
 RUN mkdir /tmp/build

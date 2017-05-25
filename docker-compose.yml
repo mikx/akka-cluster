@@ -1,10 +1,10 @@
-app-builder-stage:
+app-builder-1-stage:
   build:
     image: weave/stage
     context: .
     dockerfile: Dockerfile.build
   cached: true
-app-builder-front:
+app-builder-2-front:
   build:
     image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/front
     context: .
