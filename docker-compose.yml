@@ -1,4 +1,4 @@
-app-builder-front:
+app-builder:
   build:
     image: ignore/ignore
     context: .
