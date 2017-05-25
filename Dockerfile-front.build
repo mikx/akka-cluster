@@ -46,12 +46,12 @@ ADD . /tmp/build
 RUN sbt test front/docker:stage back/docker:stage
 
 # Pull base image again, make front image
-FROM openjdk:8 as 478489794941.dkr.ecr.us-east-1.amazonaws.com/front
+FROM openjdk:8 as front
 COPY --from=build-stage /tmp/build/front/target/docker/stage/opt/docker/ /tmp/run/
 ENTRYPOINT /tmp/run/bin/weavecluster -DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`
 
 # Pull base image again, make back image
-FROM openjdk:8 as 478489794941.dkr.ecr.us-east-1.amazonaws.com/back
+FROM openjdk:8 as back
 COPY --from=build-stage /tmp/build/back/target/docker/stage/opt/docker/ /tmp/run/
 ENTRYPOINT /tmp/run/bin/weavecluster -DLOCAL_HOSTMAME=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`
 
