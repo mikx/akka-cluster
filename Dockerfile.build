@@ -37,7 +37,7 @@ WORKDIR /tmp/build
 ADD . /tmp/build
 
 # Run build
-RUN sbt test docker:stage
+RUN sbt test front/docker:stage
 
 # Pull base image again
 FROM  openjdk:8

@@ -9,5 +9,5 @@
   service: app-builder
   registry: https://478489794941.dkr.ecr.us-east-1.amazonaws.com
   image_name: 478489794941.dkr.ecr.us-east-1.amazonaws.com/default
-  image_tag: "{{.Timestamp}}"
+  image_tag: "{{.CommitID}}"
   dockercfg_service: aws_generator

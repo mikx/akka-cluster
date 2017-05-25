@@ -26,7 +26,7 @@ class FrontEntry extends Actor with ActorLogging {
   val handler: Flow[HttpRequest, HttpResponse, Any] = Route.handlerFlow( get { complete("Hello again, stranger!") } )
 
   import context.dispatcher
-  Http(context.system).bindAndHandle(handler, interface, port).pipeTo(self)
+  val binding = Http(context.system).bindAndHandle(handler, interface, port)
   
   override def preStart() = {
     log.info("Started entry " + this.getClass.toString)
@@ -36,6 +36,9 @@ class FrontEntry extends Actor with ActorLogging {
     case other => log.info("Received message {}", other)
   }
 
+  override def postStop() = {
+    binding.value.map(_.toOption).flatten.foreach(_.unbind())
+  }
 
   
 }
