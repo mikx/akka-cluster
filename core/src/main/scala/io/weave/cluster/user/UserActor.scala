@@ -10,6 +10,8 @@ import akka.actor.ActorRef
 import akka.cluster.sharding.ClusterShardingSettings
 
 object UserActor {
+  
+  val typeName = "User"
 
   final case class EntityEnvelope(id: String, payload: Any)
   
@@ -25,12 +27,14 @@ object UserActor {
   }
   
   def startUserRegion(system: ActorSystem): ActorRef = ClusterSharding(system).start(
-    typeName = "User",
+    typeName = typeName,
     entityProps = Props[UserActor],
     settings = ClusterShardingSettings(system),
     extractEntityId = extractEntityId,
     extractShardId = extractShardId
   )
+  
+  def getUserRegion(system: ActorSystem): ActorRef = ClusterSharding(system).shardRegion(typeName)
   
   def props = Props[UserActor]
   

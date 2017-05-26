@@ -21,7 +21,7 @@ object ApplicationMain extends App {
   
   // create system
   val system = ActorSystem("ClusterSystem", config)
-  val userRegion = UserActor.startUserRegion(system)
+  val userRegion = UserActor.getUserRegion(system)
   
   // start simple listener
   val simpleClusterListener = system.actorOf(Props(classOf[SimpleClusterListener]), "SimpleClusterListener")
