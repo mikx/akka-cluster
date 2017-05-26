@@ -36,19 +36,19 @@ lazy val root = (project in file(".")).settings(
 
 lazy val core = (project in file("core")).settings(
   commonSettings,
-  name := "Core"
+  name := "cluster-core"
 )
 
 
 lazy val back = (project in file("back")).settings(
   commonSettings,
-  name := "Back"
+  name := "cluster-back"
 ).dependsOn(core).enablePlugins(JavaAppPackaging,DockerPlugin)
 
 
 lazy val front = (project in file("front")).settings(
   commonSettings,
-  name := "Front",
+  name := "cluster-front",
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-http"         % akkaHttpVersion,
     "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion  % Test,
@@ -59,6 +59,6 @@ lazy val front = (project in file("front")).settings(
 
 lazy val seed = (project in file("seed")).settings(
   commonSettings,
-  name := "Seed"
+  name := "cluster-seed"
 ).dependsOn(core).enablePlugins(JavaAppPackaging,DockerPlugin)
 
