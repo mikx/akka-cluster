@@ -33,8 +33,8 @@ class FrontEntry(userRegion: ActorRef) extends Actor with ActorLogging {
   val handler: Flow[HttpRequest, HttpResponse, Any] = Route.handlerFlow( 
     get {
       path(Segment) { id => 
-       val result = akka.pattern.ask(userRegion, UserActor.EntityEnvelope(id, "Hello, stranger"))
-       complete(result.mapTo[String])
+       userRegion ! UserActor.EntityEnvelope(id, "Hello, stranger")
+       complete(s"message ${id} sent")
       }
     }
   )
