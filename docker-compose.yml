@@ -1,8 +1,8 @@
 app-builder:
   build:
-    image: ignore/ignore
+    image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/base
     context: .
-    dockerfile: Dockerfile-front.build
+    dockerfile: Dockerfile.build
   cached: true
 aws_generator: 
   image: codeship/aws-ecr-dockercfg-generator

@@ -5,7 +5,7 @@
 #
 
 # Pull base image
-FROM  openjdk:8
+FROM  openjdk:8 as build-stage
 
 ENV SCALA_VERSION 2.12.2
 ENV SBT_VERSION 0.13.15
@@ -20,7 +20,7 @@ RUN \
   echo >> /root/.bashrc && \
   echo 'export PATH=~/scala-$SCALA_VERSION/bin:$PATH' >> /root/.bashrc
 
-# Install sbt
+# Install SBT
 RUN \
   curl -sL -o sbt-$SBT_VERSION.deb http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
   dpkg -i sbt-$SBT_VERSION.deb && \
@@ -29,3 +29,17 @@ RUN \
   apt-get install sbt && \
   sbt sbtVersion
 
+# Prepare build folder 
+RUN mkdir /tmp/build
+WORKDIR /tmp/build
+ADD . /tmp/build
+
+# Run build
+RUN sbt test front/docker:stage back/docker:stage seed/docker:stage
+
+# Pull base image again, make front image
+FROM openjdk:8
+RUN mkdir /tmp/run
+COPY --from=build-stage /tmp/build/front/target/docker/stage/opt/docker/ /tmp/run/front/
+COPY --from=build-stage /tmp/build/back/target/docker/stage/opt/docker/ /tmp/run/back/
+COPY --from=build-stage /tmp/build/seed/target/docker/stage/opt/docker/ /tmp/run/seed/
