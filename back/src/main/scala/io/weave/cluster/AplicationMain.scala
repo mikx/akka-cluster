@@ -11,7 +11,7 @@ import akka.actor.Props
 import akka.event.Logging
 
 object ApplicationMain extends App {
-  
+
   val config = ConfigFactory.load()
   val role = config.getStringList("akka.cluster.roles").get(0)
   
@@ -22,7 +22,7 @@ object ApplicationMain extends App {
   val simpleClusterListener = system.actorOf(Props(classOf[SimpleClusterListener]), "SimpleClusterListener")
   
   // main entry
-  val main = system.actorOf(Props(classOf[FrontEntry]), role)
+  val main = system.actorOf(Props(classOf[BackEntry]), role)
   Logging(system, getClass).info(s"Container ${role} is up and running")
 
   // wait till done
