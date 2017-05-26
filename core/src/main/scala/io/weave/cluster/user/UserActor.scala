@@ -12,6 +12,7 @@ import akka.cluster.sharding.ClusterShardingSettings
 object UserActor {
   
   val typeName = "User"
+  val roleName = "back"
 
   final case class EntityEnvelope(id: String, payload: Any)
   
@@ -30,6 +31,13 @@ object UserActor {
     typeName = typeName,
     entityProps = Props[UserActor],
     settings = ClusterShardingSettings(system),
+    extractEntityId = extractEntityId,
+    extractShardId = extractShardId
+  )
+  
+  def startUserRegionProxy(system: ActorSystem): ActorRef = ClusterSharding(system).startProxy(
+    typeName = typeName,
+    role = Option(roleName),
     extractEntityId = extractEntityId,
     extractShardId = extractShardId
   )
