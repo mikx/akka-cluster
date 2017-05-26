@@ -3,7 +3,7 @@ app-builder:
     image: 478489794941.dkr.ecr.us-east-1.amazonaws.com/base
     context: .
     dockerfile: Dockerfile.build
-  cached: true
+  cached: false
 aws_generator: 
   image: codeship/aws-ecr-dockercfg-generator
   encrypted_env_file: env-ecs.encrypted

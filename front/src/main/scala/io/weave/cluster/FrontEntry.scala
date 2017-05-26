@@ -1,31 +1,44 @@
 package io.weave.cluster
 
+import java.util.concurrent.TimeUnit
+
 import com.typesafe.config.ConfigFactory
 
 import akka.actor.Actor
 import akka.actor.ActorLogging
+import akka.actor.ActorRef
+import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.model.HttpResponse
-import akka.http.scaladsl.server.Directives
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Flow
-import akka.pattern.pipe
-import akka.http.scaladsl.Http
+import akka.util.Timeout
 
-class FrontEntry extends Actor with ActorLogging {
+import io.weave.cluster.user.UserActor
+
+class FrontEntry(userRegion: ActorRef) extends Actor with ActorLogging {
 
   val config = ConfigFactory.load()
   val role = config.getStringList("akka.cluster.roles").get(0)
   val interface = config.getString("cluster.bind-hostname")
   val port = 8080
+  
+  implicit val timeout = Timeout(5, TimeUnit.SECONDS)
 
   implicit val mat = ActorMaterializer()
   
   import akka.http.scaladsl.server.Directives._
-  val handler: Flow[HttpRequest, HttpResponse, Any] = Route.handlerFlow( get { complete("Hello again, stranger!") } )
+    
+  val handler: Flow[HttpRequest, HttpResponse, Any] = Route.handlerFlow( 
+    get {
+      path(Segment) { id => 
+       val result = akka.pattern.ask(userRegion, UserActor.EntityEnvelope(id, "Hello, stranger"))
+       complete(result.mapTo[String])
+      }
+    }
+  )
 
-  import context.dispatcher
   val binding = Http(context.system).bindAndHandle(handler, interface, port)
   
   override def preStart() = {
