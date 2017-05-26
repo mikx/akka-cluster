@@ -9,6 +9,7 @@ import com.typesafe.config.ConfigFactory
 import akka.actor.ActorSystem
 import akka.actor.Props
 import akka.event.Logging
+import io.weave.cluster.user.UserActor
 
 object ApplicationMain extends App {
 
@@ -17,6 +18,7 @@ object ApplicationMain extends App {
   
   // create system
   val system = ActorSystem("ClusterSystem", config)
+  val userRegion = UserActor.startUserRegion(system)
   
   // start simple listener
   val simpleClusterListener = system.actorOf(Props(classOf[SimpleClusterListener]), "SimpleClusterListener")
