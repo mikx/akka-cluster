@@ -9,6 +9,8 @@ import akka.actor.Actor
 import akka.actor.ActorSystem
 import akka.actor.Props
 import akka.event.Logging
+import akka.cluster.http.management.ClusterHttpManagement
+import akka.cluster.Cluster
 
 object ApplicationMain extends App {
 
@@ -17,6 +19,8 @@ object ApplicationMain extends App {
   
   // create system
   val system = ActorSystem("ClusterSystem", config)
+  val cluster = Cluster(system)
+  val mamager = ClusterHttpManagement(cluster).start()
   
   // start simple listener
   val simpleClusterListener = system.actorOf(Props(classOf[SimpleClusterListener]), "SimpleClusterListener")

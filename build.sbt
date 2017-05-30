@@ -4,8 +4,6 @@ val akkaHttpVersion = "10.0.6"
 
 cleanKeepFiles += baseDirectory { base => base / "target/universal" } .value
 
-dockerExposedPorts := Seq(2552)
-
 lazy val commonSettings = Seq(
 
   name            := "WeaveCluster",
@@ -15,10 +13,11 @@ lazy val commonSettings = Seq(
   scalaVersion    := "2.12.2",
   
   libraryDependencies ++= Seq(
-    "com.typesafe.akka" %% "akka-actor"             % akkaVersion,
-    "com.typesafe.akka" %% "akka-cluster"           % akkaVersion,
-    "com.typesafe.akka" %% "akka-cluster-sharding"  % akkaVersion,
-    "com.typesafe.akka" %% "akka-stream"            % akkaVersion
+    "com.typesafe.akka"  %% "akka-actor"             % akkaVersion,
+    "com.typesafe.akka"  %% "akka-cluster"           % akkaVersion,
+    "com.typesafe.akka"  %% "akka-cluster-sharding"  % akkaVersion,
+    "com.typesafe.akka"  %% "akka-stream"            % akkaVersion,
+    "com.lightbend.akka" %% "akka-management-cluster-http" % "0.3"
   ),
 
   resolvers ++= Seq(
